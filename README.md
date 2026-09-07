@@ -26,16 +26,16 @@ As requested by the project description the Pricing Service was converted to a m
 ### Implement the Vehicles API
 #### CREATE operations
 The Vehicles API is able to create a new vehicle based on input from the user with a POST request.
-Manually sending a POST request: \
+Manual request:: \
 ![](/images/Screenshot+2026-09-07+103409.png)
 
 In the swagger documentation: \
 ![](/images/Screenshot+2026-09-07+085053.png)
-![](Screenshot+2026-09-07+085213)
+![](/images/Screenshot+2026-09-07+085213.png)
 
 #### READ operations
 The Vehicles API can receive GET requests from a user, and read back either a list of all existing vehicles, or the data for a single vehicle. \
-Manually sending a POST request: \
+Manual request:: \
 ![](/images/Screenshot+2026-09-04+155339.png)
 ![](/images/Screenshot+2026-09-07+101052.png)
 
@@ -45,12 +45,23 @@ In the swagger documentation: \
 
 #### UPDATE operations
 The Vehicles API can update an existing vehicle through input from the user.
-Manually sending a POST request: \
+Manual request:: \
 ![](/images/Screenshot+2026-09-04+160243.png)
 
 In the swagger documentation: \
 ![](/images/Screenshot+2026-09-07+102626.png)
 ![](/images/Screenshot+2026-09-07+102651.png)
+
+#### DELETE operations
+The Vehicles API can delete an existing vehicle when requested by the user.
+Manual request: \
+![](/images/Screenshot+2026-09-04+155622.png)
+![](/images/Screenshot+2026-09-07+104327.png)
+
+In the swagger documentation: \
+![](/images/Screenshot+2026-09-07+085720.png)
+![](/images/Screenshot+2026-09-07+085735.png)
+
 
 #### Consume data from external services
 The Vehicles API is able to consume information from the separate Boogle Maps and Pricing Service APIs, and return that information as part of the vehicle information for a single vehicle.
