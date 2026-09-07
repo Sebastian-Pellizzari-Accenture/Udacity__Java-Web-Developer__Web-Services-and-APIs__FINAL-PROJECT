@@ -24,6 +24,15 @@ As requested by the project description the Pricing Service was converted to a m
 ![](/images/Screenshot+2026-09-04+155158.png)
 
 ### Implement the Vehicles API
+#### CREATE operations
+The Vehicles API is able to create a new vehicle based on input from the user with a POST request.
+Manually sending a POST request: \
+![](/images/Screenshot+2026-09-07+103409.png)
+
+In the swagger documentation: \
+![](/images/Screenshot+2026-09-07+085053.png)
+![](Screenshot+2026-09-07+085213)
+
 #### READ operations
 The Vehicles API can receive GET requests from a user, and read back either a list of all existing vehicles, or the data for a single vehicle. \
 Manually sending a POST request: \
