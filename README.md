@@ -35,7 +35,7 @@ In the swagger documentation: \
 
 #### READ operations
 The Vehicles API can receive GET requests from a user, and read back either a list of all existing vehicles, or the data for a single vehicle. \
-Manual request:: \
+Manual request: \
 ![](/images/Screenshot+2026-09-04+155339.png)
 ![](/images/Screenshot+2026-09-07+101052.png)
 ![](/images/Screenshot+2026-09-04+155544.png)
@@ -46,8 +46,8 @@ In the swagger documentation: \
 ![](/images/Screenshot+2026-09-07+085555.png)
 
 #### UPDATE operations
-The Vehicles API can update an existing vehicle through input from the user.
-Manual request:: \
+The Vehicles API can update an existing vehicle through input from the user.\
+Manual request: \
 ![](/images/Screenshot+2026-09-04+160243.png)
 ![](/images/Screenshot+2026-09-07+110929.png)
 
@@ -68,8 +68,8 @@ In the swagger documentation: \
 ![](/images/Screenshot+2026-09-07+085735.png)
 
 #### Consume data from external services
-The Vehicles API is able to consume information from the separate Boogle Maps and Pricing Service APIs, and return that information as part of the vehicle information for a single vehicle.
-Manually sending a POST request: \
+The Vehicles API is able to consume information from the separate Boogle Maps and Pricing Service APIs, and return that information as part of the vehicle information for a single vehicle. \
+Manual request: \
 ![](/images/Screenshot+2026-09-04+155339.png)
 
 In the swagger documentation: \
@@ -78,13 +78,13 @@ In the swagger documentation: \
 Note: Boogle Maps will assign a new random address each time a query is called, so the changes between queries are expected.
 
 ### Testing the Vehicles API
-Tests are implemented for the Vehicles API CarController that cover the CRUD (Create, Read, Update, Delete) operations.
+Tests are implemented for the Vehicles API CarController that cover the CRUD (Create, Read, Update, Delete) operations. \
 ![](/images/Screenshot+2026-09-04+154658.png)
 
 ### Eureka Server
 Both the Pricing Service and the Vehicles API were exposed to the Eureka server. The latter was also exposed despite not required by the project description as otherwise the communication would _technically_ not be through the eureka server and still through REST. Doing so, enables us to call the price service endpoint in a very neat way: `http://PRICING-SERVICE`.
 ![](/images/Screenshot+2026-09-04+160436.png)
-The eureka server information is available [here](http://localhost:8761/)
+The eureka server information is available [here](http://localhost:8761/).
 
 ### API Documentation
 ![](/images/Screenshot+2026-09-04+160731.png)
