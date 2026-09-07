@@ -3,8 +3,12 @@ package com.udacity.vehicles.api;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 
@@ -25,13 +29,16 @@ import org.springframework.boot.test.autoconfigure.json.AutoConfigureJsonTesters
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.json.JacksonTester;
+import org.springframework.hateoas.EntityModel;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.ResultActions;
 
 // rm
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 /**
  * Implements testing of the CarController class.
@@ -94,13 +101,21 @@ public class CarControllerTest {
          *   the whole list of vehicles. This should utilize the car from `getCar()`
          *   below (the vehicle will be the first in the list).
          */
+        // NOTE: the get car is already inserted and used due to the before each condition.
         Car car = getCar();
-
-        mvc.perform(post("/cars"))
+        ResultActions result = mvc.perform(get(new URI("/cars")))
             .andExpect(status().isOk())
-            //.andExpect(content().contentType(MediaType.APPLICATION_JSON))
-            //.andExpect(content().json("[]"));
-            .andExpect(jsonPath("$._embedded.carList").isArray());
+            .andExpect(content().contentType("application/hal+json"))
+            // as the CollectionModel<EntityModel<Car>> is internally implemented as an object 
+            // containing a list and NOT a list
+            .andExpect(content().json("{}"))
+            // check if there is exactly one element in the list
+            .andExpect(jsonPath("$._embedded.carList.length()").value(1))
+            // and check if the content of the element exactly matches the content from the example car below         
+            // to know what we actually get
+            .andDo(print());  
+        verifySingleCarList(result, car, "$._embedded.carList[0]");
+        verify(carService).list();  // verify that the list method was called exactly once !
     }
 
     /**
@@ -113,6 +128,18 @@ public class CarControllerTest {
          * TODO: Add a test to check that the `get` method works by calling
          *   a vehicle by ID. This should utilize the car from `getCar()` below.
          */
+         // NOTE: the get car is already inserted and used due to the before each condition.
+        Car car = getCar();
+
+        ResultActions result = mvc.perform(get(new URI("/cars/1")))    // as we added exacly one car
+            .andExpect(status().isOk())
+            .andExpect(content().contentType("application/hal+json"))
+            // as the CollectionModel<EntityModel<Car>> is internally implemented as an object 
+            // containing a list and NOT a list
+            .andExpect(content().json("{}"))
+            .andDo(print());
+        verifySingleCarList(result, car, "$");
+        verify(carService).findById(1L);  // verify that the findById method was called exactly once !
     }
 
     /**
@@ -126,6 +153,29 @@ public class CarControllerTest {
          *   when the `delete` method is called from the Car Controller. This
          *   should utilize the car from `getCar()` below.
          */
+
+        // remove the car
+        mvc.perform(delete(new URI("/cars/1")))
+            .andExpect(status().isNoContent())
+            .andDo(print());
+        verify(carService).delete(1L);   
+    }
+
+    private void verifySingleCarList(ResultActions result, Car car, String prefix) throws Exception {
+         result.andExpect(jsonPath(prefix + ".condition").value(car.getCondition().toString()))
+            .andExpect(jsonPath(prefix + ".details.model").value(car.getDetails().getModel()))
+            .andExpect(jsonPath(prefix + ".details.manufacturer.name").value(car.getDetails().getManufacturer().getName()))
+            .andExpect(jsonPath(prefix + ".details.manufacturer.code").value(car.getDetails().getManufacturer().getCode()))
+            .andExpect(jsonPath(prefix + ".details.numberOfDoors").value(car.getDetails().getNumberOfDoors()))
+            .andExpect(jsonPath(prefix + ".details.fuelType").value(car.getDetails().getFuelType()))
+            .andExpect(jsonPath(prefix + ".details.engine").value(car.getDetails().getEngine()))
+            .andExpect(jsonPath(prefix + ".details.mileage").value(car.getDetails().getMileage()))
+            .andExpect(jsonPath(prefix + ".details.modelYear").value(car.getDetails().getModelYear()))
+            .andExpect(jsonPath(prefix + ".details.productionYear").value(car.getDetails().getProductionYear()))
+            .andExpect(jsonPath(prefix + ".details.externalColor").value(car.getDetails().getExternalColor()))
+            .andExpect(jsonPath(prefix + ".details.body").value(car.getDetails().getBody()))
+            .andExpect(jsonPath(prefix + ".location.lat").value(car.getLocation().getLat()))
+            .andExpect(jsonPath(prefix + ".location.lon").value(car.getLocation().getLon()));
     }
 
     /**

@@ -35,10 +35,17 @@ public class PriceClient {
             Price price = client
                     .get()
                     .uri(uriBuilder -> uriBuilder
-                            // .path("services/price/")                // this seems like a typo!
-                            .path("services/price")
-                            .queryParam("vehicleId", vehicleId)
-                            .build()
+                            // this seems like a typo! however as we had to create a 
+                            // microservice and elimante the service and controller this 
+                            // is the worng path anyways. CrudRepository makes the 
+                            // endpoint available at /prices and not /services/price. 
+                            // .path("services/price/") 
+                            // Despite not needing @RepositoryRestResource(path = "prices")
+                            // I keep it to make the mapping more explicite and avoid any
+                            // assumptions.                
+                            .path("prices/{id}")
+                            // .queryParam("vehicleId", vehicleId)
+                            .build(vehicleId)
                     )
                     .retrieve().bodyToMono(Price.class).block();
 

@@ -24,10 +24,10 @@ public class SwaggerConfig {
   @Bean
   public OpenAPI locationOpenAPI() {
       return new OpenAPI()
-              .info(new Info().title("Dog API")
-              .description("This API returns a list of gog entries.")     
+              .info(new Info().title("Vehicle API")
+              .description("This is the final project of the third chapter of Udacity's Java Web developer course.")     
               .version("v0.0.1")
-              .license(new License().name("Location API").url("http://www.udacity.com/tos")))
+              .license(new License().name("Vehicle API").url("http://www.udacity.com/tos")))
               .externalDocs(new ExternalDocumentation()
               .description("License of API")
               .url("\"http://www.udacity.com/license"));
