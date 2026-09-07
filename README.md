@@ -28,11 +28,20 @@ As requested by the project description the Pricing Service was converted to a m
 The Vehicles API can receive GET requests from a user, and read back either a list of all existing vehicles, or the data for a single vehicle. \
 Manually sending a POST request: \
 ![](/images/Screenshot+2026-09-04+155339.png)
-![](/images/Screenshot+2026-09-07+084924.png)
+![](/images/Screenshot+2026-09-07+101052.png)
 
 In the swagger documentation: \
 ![](/images/Screenshot+2026-09-04+161206.png)
 ![](/images/Screenshot+2026-09-07+085246.png)
+
+#### UPDATE operations
+The Vehicles API can update an existing vehicle through input from the user.
+Manually sending a POST request: \
+![](/images/Screenshot+2026-09-04+160243.png)
+
+In the swagger documentation: \
+![](/images/Screenshot+2026-09-07+102626.png)
+![](/images/Screenshot+2026-09-07+102651.png)
 
 #### Consume data from external services
 The Vehicles API is able to consume information from the separate Boogle Maps and Pricing Service APIs, and return that information as part of the vehicle information for a single vehicle.
